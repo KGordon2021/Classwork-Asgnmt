@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../public/styles.css">
+    <title>View Orders</title>
+</head>
+<body>
+    <%- include('../views/partials/nav.ejs') %>
+
+    <% if (messages.error) { %>
+        <p style="color:red"><%- messages.error %></p>
+        <% } %>
+          
+        <% if (messages.success) { %>
+            <p style="color:green"><%- messages.success %></p>
+    <% } %>
+
+   
+    <div class="login">
+        <form action="/student/registration" method="post">
+            <h1>Register</h1>
+            <div class="profile">
+                <img src="https://www.exaltedchristchurch.com/wp-content/uploads/2017/02/blank-profile-picture-png-transparent.png" alt="">
+            </div>
+
+            <div class="name">
+                <label for="S_Id">Student Id #: </label>
+                <br>
+                <input type="text" name="S_Id" placeholder="S - 0013">
+            </div> 
+            <div class="name">
+                <label for="f_nm">First Name : </label>
+                <br>
+                <input type="text" name="f_nm" placeholder="Sophia">
+            </div> 
+
+            <div class="name">
+                <label for="l_nm">Last Name: </label>
+                <br>
+                <input type="text" name="l_nm" placeholder="Hales">
+            </div> 
+
+            <div class="name">
+                <label for="usr_email">Email Address: </label>
+                <br>
+                <input type="text" name="usr_email" placeholder="Email Address">
+            </div> 
+            
+            <div class="name">
+                <label for="pswrd"> Password:  </label>
+                <br>
+                <input type="password" name="pswrd" placeholder="Password">
+            </div>
+            <div class="submit">
+                <input type="submit">
+            </div>
+        </form>
+    </div>
+</body>
+</html>
