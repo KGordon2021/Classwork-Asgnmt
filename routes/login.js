@@ -35,7 +35,7 @@ router.post('/student/login', function(req, res, next){
 
 router.get('/logout', function(req, res){
     req.session.destroy();
-    req.flash('success', "Enter your Login Credentials");
+    // req.flash('success', "Enter your Login Credentials");
     res.redirect('/login');
 })
 

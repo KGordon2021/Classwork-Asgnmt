@@ -9,11 +9,54 @@
 </head>
 <body>
     <%- include('../views/partials/nav.ejs') %>
-
+<div class="adminViews">
 
     <h1>View of all orders recieved</h1>
     
-   
+    <table>
+        <thead>
+            <tr>
+                <th>Student Id #</th>
+                <th>Title of Book </th>
+                <th>Date of Request</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <% if(allrequests.length) {
+                for(var i = 0; i < allrequests.length; i++) { 
+            %>
+            <form action="/library/requestConfirmed" method="post">
+            <tr>
+                <input type="hidden" name="id" value="allrequests[i].id">
+                <td class="centered"><%= allrequests[i].student_id %></td>
+                <td><%= allrequests[i].book_requested %></td>
+                <td><%= new Date(allrequests[i].date_request).toLocaleDateString('fr-CA') %> </td>  
+                <input type="hidden" name="student_id" value="<%= allrequests[i].student_id%>">
+                <input type="hidden" name="date_reqes" value="<%= allrequests[i].date_request%>">
+                <input type="hidden" name="title" value="<%= new Date(allrequests[i].date_request).toLocaleDateString('fr-CA')%>">
+                <td class="centered">
+                    <input type="submit" class="light" value="Confirm"> 
+                    <a class="warn"  href="/allrequests/delete/<%=allrequests[i].id%>">Remove</a>
+                </td>
+
+            </tr>
+        </form>
+               <% }
+          }else{ %>
+            <tr>
+                <td>No Current Orders Listed</td>
+            </tr>
+           <% } %>
+        </tbody>
+    </table>
+</div>
+
+<div class="logout">
+    <a href="">Logout</a>
+    </div>
+
 
 </body>
 </html>

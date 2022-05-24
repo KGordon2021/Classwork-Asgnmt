@@ -3,7 +3,7 @@ var router = express.Router();
 var conn = require('../lib/dbConnections')
 
 router.get('/allrequests', function(req, res, next) {
-    if(req.session.loggedin === true) {
+    // if(req.session.loggedin === true) {
         conn.query('SELECT * FROM books_requested ORDER BY id', function(err, rows){
             if(err) {
             console.log('not being rendered');
@@ -16,52 +16,56 @@ router.get('/allrequests', function(req, res, next) {
             }
         })
 
-    } else {
-        res.redirect('/');
-    }
+    // } else {
+    //     res.redirect('/');
+    //     console.log(rows)
+    // }
 });
 
 
 
-router.get('/viewOrders/edit/:id', function(req, res) { //must be router.get or app.get or whatever else i choose but it has to be a get http verb
-    conn.query('SELECT * FROM customer_orders WHERE id=' + req.params.id, function(err,row){
+// router.get('/allrequests/confirm/:id', function(req, res) { //must be router.get or app.get or whatever else i choose but it has to be a get http verb
+//     conn.query('SELECT * FROM books_requested WHERE id=' + req.params.id, function(err,row){
+//         if(err) {
+//             console.log('not being rendered');
+//         } else {
+//             res.render('../views/editOrders', {cust_orders:row});
+//         }
+//     });
+// });
+
+router.post('/library/requestConfirmed' , (req, res) => {
+
+    var date_approved = new Date().toLocaleDateString('fr-CA')
+    let data = {    student_id: req.body.student_id, 
+                    title: req.body.title, 
+                    date_requested: req.body.date_reqes,
+                    date_approved: date_approved,
+                };
+
+        let sqlQuery = "INSERT INTO loans_approved SET ?";
+    //  let sqlQuery = "INSERT INTO students (frst_nm, last_nm, email_addr, cohort) VALUES ('"+ req.body.first_name +"', '" + req.body.last_name + "', '"+ req.body.email_address + "','" + req.body.cohort_number +  "') ";
+
+
+        let vQuery = conn.query(sqlQuery, data,(err, results) => {
         if(err) {
-            console.log('not being rendered');
+        console.log(err); 
+        console.log(date_approved); 
         } else {
-            res.render('../views/editOrders', {cust_orders:row});
+        //    res.send(JSONResponse(results));
+        res.redirect('/allrequests');
         }
-    });
-});
+        });
 
-   /* POST ordersedit page. */
-router.post('/viewOrders/update', function(req, res, next) {
+    }); 
+
+
+
+
+//   /* GET ORDERS DELETE METHOD. */
+  router.get('/allrequests/delete/:id', function(req, res, next) {
       
-    let sqlQuery = "UPDATE customer_orders SET customer_order ='" + req.body.cust_order +  
-                                        "', customer_email ='" +  req.body.cust_email +
-                                        "', order_date ='" +  req.body.order_date + 
-                                        "' WHERE id = " + req.body.id;
-
-    conn.query(sqlQuery, function(err,rows)     {
-
-        if(err) {
-            console.log(err)
-        } else {
-            res.redirect('/admin');   
-            next();
-        }   
-               //req.flash('error', err); 
-                              
-            });
-           
-       });
-
-
-
-
-  /* GET ORDERS DELETE METHOD. */
-  router.get('/viewOrders/delete/:id', function(req, res, next) {
-      
-    conn.query('DELETE FROM customer_orders WHERE id='+ req.params.id, function(err,row)     {
+    conn.query('DELETE FROM books_requested WHERE id='+ req.params.id, function(err,row)     {
     
            if(err){
             //    req.flash('error', err); 
@@ -69,7 +73,7 @@ router.post('/viewOrders/update', function(req, res, next) {
               
            }else{
             // req.flash('success', 'Deleted successfully!!'); 
-            res.redirect('/admin');   
+            res.redirect('/allrequests');   
             next();      
            }
                                
