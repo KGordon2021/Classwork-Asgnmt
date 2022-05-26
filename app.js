@@ -25,7 +25,7 @@ var registerRouter = require('./routes/register');
 var loginRouter = require('./routes/login');
 var libraryRouter = require('./routes/library');
 var libviewRouter = require('./routes/libview');
-// var receiptRouter = require('./routes/receipt');
+// var studentRecordsRouter = require('./routes/studentRecords');
 
 
 var app = express();
@@ -45,7 +45,6 @@ app.set('views', path.join(__dirname, 'views'));
  
  //Session Settings
  app.use(cookieParser());
- app.use(cookieParser());
  app.use(session({ 
      secret: 'T3$C@r|8proDj8t',
      resave: false,
@@ -63,7 +62,7 @@ app.set('views', path.join(__dirname, 'views'));
  app.use(loginRouter);
  app.use(libraryRouter);
  app.use(libviewRouter);
-//  app.use(receiptRouter);
+//  app.use(studentRecordsRouter);
 
  app.listen(port, () => console.log(`Listening on port ${port}..`));
 

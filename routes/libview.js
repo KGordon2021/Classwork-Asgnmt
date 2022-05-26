@@ -1,10 +1,11 @@
 var express = require('express');
+const req = require('express/lib/request');
 var router = express.Router();
 var conn = require('../lib/dbConnections')
 
 router.get('/allrequests', function(req, res, next) {
     // if(req.session.loggedin === true) {
-        conn.query('SELECT * FROM books_requested ORDER BY id', function(err, rows){
+        conn.query('SELECT * FROM books_requested GROUP BY student_id ORDER BY id', function(err, rows){
             if(err) {
             console.log('not being rendered');
             throw err 
@@ -33,6 +34,25 @@ router.get('/allrequests', function(req, res, next) {
 //         }
 //     });
 // });
+
+
+router.get('/allrequests/viewRecords/:id', (req, res) => {
+    let sql =  "SELECT rs.st_fname, rs.st_lname, COUNT(bk.book_requested) AS Title_Of_Book"+
+                " FROM registered_students rs, books_requested bk"+
+                " WHERE rs.student_id = bk.student_id" +
+                " AND rs.id = " + req.params.id
+                " GROUP BY rs.st_fname, rs.st_lname;"
+
+    conn.query(sql, (err, rows)=> {
+        if (err)
+        console.log(err)
+        else
+        console.log(rows);
+        res.render('../views/studentRecords', {
+            records: rows
+        });
+    })
+})
 
 router.post('/library/requestConfirmed' , (req, res) => {
 

@@ -22,6 +22,7 @@ let data = {    student_id:     req.body.S_Id,
                 st_lname: req.body.l_nm,
                 st_email: req.body.usr_email,
                 st_pswd: value,
+                has_lib_priv: req.body.priv
             };
 
     let sqlQuery = "INSERT INTO registered_students SET ?";

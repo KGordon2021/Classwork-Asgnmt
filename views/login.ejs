@@ -10,16 +10,18 @@
 <body>
     <%- include('../views/partials/nav.ejs') %>
 
-    <% if (messages.error) { %>
-        <p style="color:red"><%- messages.error %></p>
-        <% } %>
-          
-        <% if (messages.success) { %>
-            <p style="color:green"><%- messages.success %></p>
-    <% } %>
-
    
     <div class="login">
+        <div class="mess"> <!--styles cannot be applied to this-->
+        <% if (messages.error) { %>
+            <p style="color:red"><%- messages.error %></p>
+            <% } %>
+              
+            <% if (messages.success) { %>
+                <p style="color:green"><%- messages.success %></p>
+        <% } %>
+        </div>
+    
         <form action="/student/login" method="post">
             <h1>Login</h1>
             <div class="profile">
