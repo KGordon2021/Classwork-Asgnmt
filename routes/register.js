@@ -34,7 +34,7 @@ let data = {    student_id:     req.body.S_Id,
       console.log(err); 
     } else {
     //    res.send(JSONResponse(results));
-       res.redirect('/');
+       res.redirect('/login');
     }
     });
 }); 

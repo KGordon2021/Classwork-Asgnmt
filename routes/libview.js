@@ -1,10 +1,9 @@
 var express = require('express');
-const req = require('express/lib/request');
 var router = express.Router();
 var conn = require('../lib/dbConnections')
 
 router.get('/allrequests', function(req, res, next) {
-    // if(req.session.loggedin === true) {
+    if(req.session.loggedin === true && req.session.is_librarian == 0) {
         conn.query('SELECT * FROM books_requested GROUP BY student_id ORDER BY id', function(err, rows){
             if(err) {
             console.log('not being rendered');
@@ -17,10 +16,10 @@ router.get('/allrequests', function(req, res, next) {
             }
         })
 
-    // } else {
-    //     res.redirect('/');
-    //     console.log(rows)
-    // }
+    } else {
+        res.redirect('/');
+        console.log(rows)
+    }
 });
 
 
